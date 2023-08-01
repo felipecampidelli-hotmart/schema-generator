@@ -1,14 +1,16 @@
 use std::fs::{File, self};
-use std::error::Error;
 use std::path::Path;
 use std::io::Write;
+use std::error::Error;
 
-
-pub fn create_config(arguments: Arguments) -> Result<(), Box<dyn Error>> {
+pub fn create_config(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let base_data = fs::read_to_string("data/config.yaml").expect("Unable to read base config file");
-    let data = base_data.replace("{entity}", &arguments.entity).replace("{action}", &arguments.action);
+    
+    let data = base_data
+    .replace("{entity}", &arguments.entity)
+    .replace("{action}", &arguments.action);
 
-    let schema_path = "/Users/felipe.campidelli/Documents/Projects/datahub-schema/schema/config/1.1/mem_community_consume";
+    let schema_path = format!("{}/config/1.1/mem_community_consume", base_path);
     let final_directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
     
     let file_name = "event-1.0.config.yaml";
@@ -25,11 +27,11 @@ pub fn create_config(arguments: Arguments) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn create_docs(arguments: Arguments) -> Result<(), Box<dyn Error>> {
+pub fn create_docs(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let base_data = fs::read_to_string("data/doc.md").expect("Unable to read base doc file");
     let data = base_data.replace("{entity}", &arguments.entity).replace("{action}", &arguments.action);
 
-    let schema_path = "/Users/felipe.campidelli/Documents/Projects/datahub-schema/schema/doc/1.1/mem_community_consume";
+    let schema_path = format!("{}/doc/1.1/mem_community_consume", base_path);
     let final_directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
     
     let file_name = "event-1.0.doc.md";
@@ -46,11 +48,11 @@ pub fn create_docs(arguments: Arguments) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn create_example(arguments: Arguments) -> Result<(), Box<dyn Error>> {
+pub fn create_example(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let base_data = fs::read_to_string("data/example.txt").expect("Unable to read base example file");
     let data = base_data.replace("{entity}", &arguments.entity).replace("{action}", &arguments.action);
 
-    let schema_path = "/Users/felipe.campidelli/Documents/Projects/datahub-schema/schema/example/1.1/mem_community_consume";
+    let schema_path = format!("{}/example/1.1/mem_community_consume", base_path);
     let final_directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
     
     let file_name = "event-1.0.txt";
@@ -67,11 +69,11 @@ pub fn create_example(arguments: Arguments) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn create_json(arguments: Arguments) -> Result<(), Box<dyn Error>> {
+pub fn create_json(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let base_data = fs::read_to_string("data/schema.json").expect("Unable to read base schema file");
     let data = base_data.replace("{entity}", &arguments.entity).replace("{action}", &arguments.action);
 
-    let schema_path = "/Users/felipe.campidelli/Documents/Projects/datahub-schema/schema/json/1.1/mem_community_consume";
+    let schema_path = format!("{}/json/1.1/mem_community_consume", base_path);
     let final_directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
     
     let file_name = "event-1.0.schema.json";
@@ -88,11 +90,11 @@ pub fn create_json(arguments: Arguments) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn create_event(arguments: Arguments) -> Result<(), Box<dyn Error>> {
+pub fn create_event(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let base_data = fs::read_to_string("data/event.json").expect("Unable to read base event file");
     let data = base_data.replace("{entity}", &arguments.entity).replace("{action}", &arguments.action);
 
-    let schema_path = "/Users/felipe.campidelli/Documents/Projects/datahub-schema/schema/json/1.1/mem_community_consume";
+    let schema_path = format!("{}/json/1.1/mem_community_consume", base_path);
     let final_directory = format!("{}/{}", schema_path, arguments.entity);
     
     let file_name = format!("{}_{}.schema.json", arguments.action, arguments.entity);
