@@ -1,13 +1,20 @@
 use std::env;
-use dotenv::dotenv;
 use std::process;
+use std::path::Path;
+use dotenv::dotenv;
 
 use schema_generator::Arguments;
 
 fn main() {
     dotenv().ok();
     let args: Vec<String> = env::args().collect();
+    
     let base_path = std::env::var("LOCAL_PATH").unwrap();
+    if !Path::new(&base_path).exists() {
+        let error_message = String::from("Project directory not found!").color_with(91);
+        eprintln!("{error_message} Please check if the environment variable LOCAL_PATH is correct.");
+        process::exit(1);
+    }
 
     let arguments = Arguments::new(&args).unwrap_or_else(| err| {
         eprintln!("Problem parsing arguments: {}", err);
@@ -47,5 +54,15 @@ fn main() {
         process::exit(1);
     } else {
         println!("Event json file successfully created.\n")
+    }
+}
+
+trait Color {
+    fn color_with(&self, color: i8) -> Self;
+}
+
+impl Color for String {
+    fn color_with(&self, color: i8) -> Self {
+        format!("\x1b[{color}m{self}\x1b[0m")
     }
 }
