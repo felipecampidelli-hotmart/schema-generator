@@ -12,6 +12,6 @@ Just install rust
 ## Usage
 
 - Set the datahub-schema project directory in the LOCAL_PATH environment variable
-- Run `cargo run {entity} {action}` inside the project's root folder
+- Run `cargo run {system} {entity} {action}` inside the project's root folder
 
 It will generate the config, doc, example and json files based on the base schema and the provided arguments, any additional parameter must be manually set. 
