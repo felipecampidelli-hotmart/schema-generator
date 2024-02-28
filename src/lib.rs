@@ -4,8 +4,8 @@ use std::io::Write;
 use std::error::Error;
 
 pub fn create_config(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
-    let schema_path = format!("{}/config/1.1/mem_community_consume", base_path);
-    let directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
+    let schema_path = format!("{}/config/1.1", base_path);
+    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
 
     let file_data =  FileData { 
         reference_file: "data/config.yaml",
@@ -19,8 +19,8 @@ pub fn create_config(arguments: Arguments, base_path: String) -> Result<(), Box<
 }
 
 pub fn create_docs(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
-    let schema_path = format!("{}/doc/1.1/mem_community_consume", base_path);
-    let directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
+    let schema_path = format!("{}/doc/1.1", base_path);
+    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
 
     let file_data =  FileData { 
         reference_file: "data/doc.md",
@@ -34,8 +34,8 @@ pub fn create_docs(arguments: Arguments, base_path: String) -> Result<(), Box<dy
 }
 
 pub fn create_example(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
-    let schema_path = format!("{}/example/1.1/mem_community_consume", base_path);
-    let directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
+    let schema_path = format!("{}/example/1.1", base_path);
+    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
 
     let file_data =  FileData { 
         reference_file: "data/example.txt",
@@ -49,8 +49,8 @@ pub fn create_example(arguments: Arguments, base_path: String) -> Result<(), Box
 }
 
 pub fn create_json(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
-    let schema_path = format!("{}/json/1.1/mem_community_consume", base_path);
-    let directory = format!("{}/{}/{}", schema_path, arguments.entity, arguments.action);
+    let schema_path = format!("{}/json/1.1", base_path);
+    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
 
     let file_data =  FileData { 
         reference_file: "data/schema.json",
@@ -64,8 +64,8 @@ pub fn create_json(arguments: Arguments, base_path: String) -> Result<(), Box<dy
 }
 
 pub fn create_event(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
-    let schema_path = format!("{}/json/1.1/mem_community_consume", base_path);
-    let directory = format!("{}/{}", schema_path, arguments.entity);
+    let schema_path = format!("{}/json/1.1", base_path);
+    let directory = format!("{}/{}/{}", schema_path, arguments.system, arguments.entity);
     let file_name = format!("{}_{}.schema.json", arguments.action, arguments.entity);
 
     let file_data =  FileData { 
@@ -89,7 +89,10 @@ impl <'a>FileData<'a> {
     pub fn generate_file(self, arguments: Arguments) -> Result<(), Box<dyn Error>> {
         let base_data = fs::read_to_string(self.reference_file)?;
     
-        let data = base_data.replace("{entity}", &arguments.entity).replace("{action}", &arguments.action);
+        let data = base_data
+            .replace("{system}", &arguments.system)
+            .replace("{entity}", &arguments.entity)
+            .replace("{action}", &arguments.action);
 
         let final_path = format!("/{}/{}", self.directory, self.file_name);
 
@@ -107,6 +110,7 @@ impl <'a>FileData<'a> {
 
 #[derive(Clone)]
 pub struct Arguments {
+    pub system: String,
     pub entity: String,
     pub action: String,
 }
@@ -115,9 +119,10 @@ impl Arguments {
     pub fn new(args: &[String]) -> Result<Arguments, &str> {
         if args.len() < 3 { return Err("Not enough arguments") };
 
-        let entity = args[1].clone();
-        let action = args[2].clone();
+        let system = args[1].clone();
+        let entity = args[2].clone();
+        let action = args[3].clone();
 
-        Ok(Arguments { entity, action })
+        Ok(Arguments { system, entity, action })
     }
 }
