@@ -1,6 +1,6 @@
-event: mem_community_consume/{entity}/{action}/1.0
+event: {system}/{entity}/{action}/1.0
 notification:
-- email: puconsumer.community_consume@hotmart.com
+- email: consumer-pu-moderation-support-squad@hotmart.com
 transformation:
 - env: production
   analysis: true
