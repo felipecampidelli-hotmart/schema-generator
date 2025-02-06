@@ -5,7 +5,7 @@ use std::error::Error;
 
 pub fn create_config(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let schema_path = format!("{}/config/1.1", base_path);
-    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
+    let directory = format!("{}/{}/{}/{}_{}", schema_path, arguments.system, arguments.entity, arguments.action, arguments.nature);
 
     let file_data =  FileData { 
         reference_file: "data/config.yaml",
@@ -20,7 +20,7 @@ pub fn create_config(arguments: Arguments, base_path: String) -> Result<(), Box<
 
 pub fn create_docs(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let schema_path = format!("{}/doc/1.1", base_path);
-    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
+    let directory = format!("{}/{}/{}/{}_{}", schema_path, arguments.system, arguments.entity, arguments.action, arguments.nature);
 
     let file_data =  FileData { 
         reference_file: "data/doc.md",
@@ -35,7 +35,7 @@ pub fn create_docs(arguments: Arguments, base_path: String) -> Result<(), Box<dy
 
 pub fn create_example(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let schema_path = format!("{}/example/1.1", base_path);
-    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
+    let directory = format!("{}/{}/{}/{}_{}", schema_path, arguments.system, arguments.entity, arguments.action, arguments.nature);
 
     let file_data =  FileData { 
         reference_file: "data/example.txt",
@@ -50,7 +50,7 @@ pub fn create_example(arguments: Arguments, base_path: String) -> Result<(), Box
 
 pub fn create_json(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let schema_path = format!("{}/json/1.1", base_path);
-    let directory = format!("{}/{}/{}/{}", schema_path, arguments.system, arguments.entity, arguments.action);
+    let directory = format!("{}/{}/{}/{}_{}", schema_path, arguments.system, arguments.entity, arguments.action, arguments.nature);
 
     let file_data =  FileData { 
         reference_file: "data/schema.json",
@@ -66,7 +66,7 @@ pub fn create_json(arguments: Arguments, base_path: String) -> Result<(), Box<dy
 pub fn create_event(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let schema_path = format!("{}/json/1.1", base_path);
     let directory = format!("{}/{}/{}", schema_path, arguments.system, arguments.entity);
-    let file_name = format!("{}_{}.schema.json", arguments.action, arguments.entity);
+    let file_name = format!("{}_{}.schema.json", arguments.action, arguments.nature);
 
     let file_data =  FileData { 
         reference_file: "data/event.json",
@@ -92,7 +92,8 @@ impl <'a>FileData<'a> {
         let data = base_data
             .replace("{system}", &arguments.system)
             .replace("{entity}", &arguments.entity)
-            .replace("{action}", &arguments.action);
+            .replace("{action}", &arguments.action)
+            .replace("{nature}", &arguments.nature);
 
         let final_path = format!("/{}/{}", self.directory, self.file_name);
 
@@ -113,6 +114,7 @@ pub struct Arguments {
     pub system: String,
     pub entity: String,
     pub action: String,
+    pub nature: String
 }
 
 impl Arguments {
@@ -122,7 +124,8 @@ impl Arguments {
         let system = args[1].clone();
         let entity = args[2].clone();
         let action = args[3].clone();
+        let nature = args[4].clone();
 
-        Ok(Arguments { system, entity, action })
+        Ok(Arguments { system, entity, action, nature })
     }
 }

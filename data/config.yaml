@@ -1,6 +1,6 @@
-event: {system}/{entity}/{action}/1.0
+event: {system}/{entity}/{action}_{nature}/1.0
 notification:
-- email: consumer-pu-moderation-support-squad@hotmart.com
+- email: consumer-pu-app-experience@hotmart.com
 transformation:
 - env: production
   analysis: true
