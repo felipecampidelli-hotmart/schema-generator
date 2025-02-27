@@ -66,7 +66,7 @@ pub fn create_json(arguments: Arguments, base_path: String) -> Result<(), Box<dy
 pub fn create_event(arguments: Arguments, base_path: String) -> Result<(), Box<dyn Error>> {
     let schema_path = format!("{}/json/1.1", base_path);
     let directory = format!("{}/{}/{}", schema_path, arguments.system, arguments.entity);
-    let file_name = format!("{}_{}.schema.json", arguments.action, arguments.nature);
+    let file_name = format!("{}-{}.schema.json", arguments.action, arguments.nature.replace("_", "-"));
 
     let file_data =  FileData { 
         reference_file: "data/event.json",

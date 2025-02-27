@@ -5,11 +5,9 @@ transformation:
 - env: production
   analysis: true
   volumetry: default
-  investigation: false
 - env: staging
   analysis: false
   volumetry: default
-  investigation: false
 ingestion:
   tracking:
   - env: production

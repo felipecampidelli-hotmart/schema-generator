@@ -9,7 +9,7 @@
   ],
   "properties": {
     "event": {
-      "$ref": "https://schema.datahub.vulcano.rocks/json/1.1/{system}/{entity}/{action}_{nature}.schema.json"
+      "$ref": "https://schema.datahub.vulcano.rocks/json/1.1/{system}/{entity}/{action}-{nature}.schema.json"
     }
   }
 }
