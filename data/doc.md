@@ -1,5 +1,5 @@
 # Documentação
-## schema/doc/1.1/{system}/{entity}/{action}-{nature}/event-1.0.doc.md
+## schema/doc/1.1/{system}/{entity}/{action}_{nature}/event-1.0.doc.md
 ---
 #### **DESCRIÇÃO**:
 <Insert description>

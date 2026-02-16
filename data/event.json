@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://schema.datahub.vulcano.rocks/json/1.1/{system}/{entity}/{action}-{nature}.schema.json",
+  "$id": "https://schema.datahub.vulcano.rocks/json/1.1/{system}/{entity}/{action}_{nature}.schema.json",
   "type": "object",
   "allOf": [
     {
